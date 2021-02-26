@@ -1,20 +1,32 @@
 version: "3"
+#services:
+#  db:
+#    image: mysql:8.0
+#    volumes:
+#      - db-store:/var/lib/mysql
+#      - ./logs:/var/log/mysql
+#      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+#    environment:
+#      - MYSQL_DATABASE=${DB_NAME}
+#      - MYSQL_USER=${DB_USER}
+#      - MYSQL_PASSWORD=${DB_PASS}
+#      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+#      - TZ=${TZ}
+#    ports:
+#      - ${DB_PORT}:3306
+#
+#volumes:
+#  db-store:
 services:
-  db:
-    image: mysql:8.0
-    volumes:
-      - db-store:/var/lib/mysql
-      - ./logs:/var/log/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  pg:
+    image: postgis/postgis:11-2.5-alpine
     environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
-      - TZ=${TZ}
+      POSTGRES_USER: ${DB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
     ports:
-      - ${DB_PORT}:3306
-
+      - 15432:5432
 volumes:
-  db-store:
-
+  pg_data:
+    driver: local
