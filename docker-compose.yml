@@ -19,14 +19,14 @@ version: "3"
 #  db-store:
 services:
   pg:
-    image: postgis/postgis:11-2.5-alpine
+    image: postgis/postgis:13-master
     environment:
       POSTGRES_USER: ${DB_POSTGRES_USER}
       POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD}
     volumes:
       - pg_data:/var/lib/postgresql/data
     ports:
-      - 15432:5432
+      - 5432:5432
 volumes:
   pg_data:
     driver: local
